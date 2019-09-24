@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zss.mapper.StudentMapper">
+
+    <select id="getStuCount" resultType="int" parameterType="String">
+        select count(1) from student
+        <where>
+            <if test="stuName !=null and stuName !=''">
+                and studentName like CONCAT('%',#{stuName},'%')
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryStu" resultType="Student" parameterType="map">
+        select * from student
+        <where>
+            <if test="stuName !=null and stuName !=''">
+                and studentName like CONCAT('%',#{stuName},'%')
+            </if>
+        </where>
+        limit #{indexStu},#{stuCount}
+    </select>
+
+    <delete id="delStu" parameterType="int">
+        delete from student where studentNo =#{stuNo}
+    </delete>
+
+    <update id="upStu" parameterType="Student">
+        UPDATE student
+        <set>
+            <if test="loginPwd != null and loginPwd != ''">loginPwd=#{loginPwd},</if>
+            <if test="studentName != null and studentName != ''">studentName=#{studentName},</if>
+            <if test=" sex != null and sex != ''">sex=#{sex},</if>
+            <if test=" gradeId != null ">gradeId=#{gradeId},</if>
+            <if test="phone != null and phone != ''">phone=#{phone},</if>
+            <if test="address != null and address != ''">address=#{address},</if>
+            <if test=" bornDate != null and bornDate != ''">bornDate=#{bornDate},</if>
+            <if test="email  != null and email != ''">email=#{email},</if>
+            <if test="identityCard != null and identityCard != ''">identityCard=#{identityCard}</if>
+        </set>
+        WHERE studentNo=#{studentNo}
+    </update>
+
+    <insert id="addStu" parameterType="Student">
+        insert into student values
+        <if test="loginPwd != null and loginPwd != ''">studentNo=#{studentNo},</if>
+        <if test="loginPwd != null and loginPwd != ''">loginPwd=#{loginPwd},</if>
+        <if test="studentName != null and studentName != ''">studentName=#{studentName},</if>
+        <if test=" sex != null and sex != ''">sex=#{sex},</if>
+        <if test=" gradeId != null ">gradeId=#{gradeId},</if>
+        <if test="phone != null and phone != ''">phone=#{phone},</if>
+        <if test="address != null and address != ''">address=#{address},</if>
+        <if test=" bornDate != null and bornDate != ''">bornDate=#{bornDate},</if>
+        <if test="email  != null and email != ''">email=#{email},</if>
+        <if test="identityCard != null and identityCard != ''">identityCard=#{identityCard}</if>
+    </insert>
+
+</mapper>
